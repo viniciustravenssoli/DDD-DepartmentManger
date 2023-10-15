@@ -20,10 +20,16 @@ namespace Infra.Repositories
 
         public async Task<Department> GetByName(string name)
         {
-            var employees = await _context.Departments.FirstOrDefaultAsync(x => x.DepartmentName.ToLower() == name.ToLower());
+            var department = await _context.Departments.FirstOrDefaultAsync(x => x.DepartmentName.ToLower() == name.ToLower());
 
-            return employees;
+            return department;
         }
 
+        public async Task<Department> GetDepartmentIncludeEmployee(long id)
+        {
+            var department = await _context.Departments.Include(x => x.Employees).FirstOrDefaultAsync(x => x.Id == id);
+
+            return department;
+        }
     }
 }

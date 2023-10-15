@@ -9,5 +9,7 @@ namespace Infra.Interfaces
     public interface IDepartmentRepository : IBaseRepository<Department>
     {
         Task<Department> GetByName(string name);
+
+        Task<Department> GetDepartmentIncludeEmployee(long id);
     }
 }

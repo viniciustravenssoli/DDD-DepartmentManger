@@ -24,6 +24,12 @@ namespace Domain.Entities
 
         public string DepartmentName { get; private set; }
         public int EmployeeLimit { get; private set; }
+        public List<Employee> Employees { get; set; }
+
+        public bool AtingiuLimiteFuncionarios()
+        {
+            return Employees.Count >= EmployeeLimit;
+        }
 
         public override bool Validate()
         {

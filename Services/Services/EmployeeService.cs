@@ -28,13 +28,18 @@ namespace Services.Services
 
         public async Task<EmployeeDto> Create(EmployeeDto employeeDto)
         {
-            var department = await _departmentRepository.Get(employeeDto.DepartmentId);
+            var department = await _departmentRepository.GetDepartmentIncludeEmployee(employeeDto.DepartmentId);
 
-            var employeeQntd = await _employeRepository.GetNumbersOfEmployeesByDepartament(employeeDto.DepartmentId);
+            if (department.AtingiuLimiteFuncionarios())
+            {
+                throw new DomainExceptions($"O departamento {department.DepartmentName} atingiu seu limite máximo de {department.EmployeeLimit} funcionários");
+            }
 
-            ValidateDepartment(department);
+            // var employeeQntd = await _employeRepository.GetNumbersOfEmployeesByDepartament(employeeDto.DepartmentId);
 
-            ValidateEmployeeLimit(employeeQntd, department);
+            // ValidateDepartment(department);
+
+            // ValidateEmployeeLimit(employeeQntd, department);
 
             var employeee = _mapper.Map<Employee>(employeeDto);
 
@@ -42,14 +47,6 @@ namespace Services.Services
             employeeCreated.Department = department;
 
             return _mapper.Map<EmployeeDto>(employeeCreated);
-        }
-
-        private void ValidateDepartment(Department department)
-        {
-            if (department == null)
-            {
-                throw new DomainExceptions("Nenhum departamento encontrado com o Id fornecido, por favor verifique");
-            }
         }
 
 
