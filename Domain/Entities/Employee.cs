@@ -18,7 +18,7 @@ namespace Domain.Entities
             Cpf = cpf;
             Email = email;
             Salario = salario;
-            SalarioAnual = salarioAnual;
+            SalarioAnual = salario * 12;
             DataDeEntrada = dataDeEntrada;
             DepartmentId = departmentId;
 

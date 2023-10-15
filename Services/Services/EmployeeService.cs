@@ -30,6 +30,11 @@ namespace Services.Services
         {
             var department = await _departmentRepository.GetDepartmentIncludeEmployee(employeeDto.DepartmentId);
 
+            if (department == null)
+            {
+                throw new DomainExceptions($"O departamento com Id informado não existe, por favor insira um valor valido");
+            }
+
             if (department.AtingiuLimiteFuncionarios())
             {
                 throw new DomainExceptions($"O departamento {department.DepartmentName} atingiu seu limite máximo de {department.EmployeeLimit} funcionários");
