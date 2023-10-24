@@ -15,14 +15,12 @@ namespace Services.Services
     {
         private readonly IEmployeeRepository _employeRepository;
         private readonly IDepartmentRepository _departmentRepository;
-        private readonly IDepartmentService _departmentService;
         private readonly IMapper _mapper;
 
-        public EmployeeService(IEmployeeRepository employeRepository, IDepartmentRepository departmentRepository, IDepartmentService departmentService, IMapper mapper)
+        public EmployeeService(IEmployeeRepository employeRepository, IDepartmentRepository departmentRepository, IMapper mapper)
         {
             _employeRepository = employeRepository;
             _departmentRepository = departmentRepository;
-            _departmentService = departmentService;
             _mapper = mapper;
         }
 

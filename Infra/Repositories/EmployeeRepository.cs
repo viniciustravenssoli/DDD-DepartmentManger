@@ -32,21 +32,6 @@ namespace Infra.Repositories
             return employee;
         }
 
-        public async Task<List<Employee>> ListEmployeesSalaryByDepartmentId(int departmentId)
-        {
-            var employees = await _context.Employees.Where(x => x.DepartmentId == departmentId).OrderByDescending(x => x.SalarioAnual).ToListAsync();
-
-            return employees;
-        }
-
-        public async Task<List<Employee>> GetEmployeesWithAboveAverageSalary()
-        {
-            var avrgSalary = await _context.Employees.AverageAsync(x => x.SalarioAnual);
-
-            var employees = await _context.Employees.Where(x => x.SalarioAnual <= avrgSalary).ToListAsync();
-
-            return employees;
-        }
 
         public async Task<long> GetNumbersOfEmployeesByDepartament(long departmentId)
         {

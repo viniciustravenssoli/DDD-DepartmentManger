@@ -11,8 +11,6 @@ namespace Infra.Interfaces
         Task<Employee> GetByCpf(string cpf);
         Task<Employee> GetById(long id);
         Task<List<Employee>> GetByMouthOfJoining(DateTime dataEntrada);
-        Task<List<Employee>> ListEmployeesSalaryByDepartmentId(int departmentId);
-        Task<List<Employee>> GetEmployeesWithAboveAverageSalary();
         Task<long> GetNumbersOfEmployeesByDepartament(long departmentId);
     }
 }

@@ -41,10 +41,10 @@ namespace Api.Controllers
             {
                 return BadRequest(Responses.DomainErrorMessage(ex.Message, ex.Errors));
             }
-            // catch (Exception)
-            // {
-            //     return StatusCode(500, Responses.ApplicationErrorMessage());
-            // }
+            catch (Exception)
+            {
+                return StatusCode(500, Responses.ApplicationErrorMessage());
+            }
         }
     }
 }

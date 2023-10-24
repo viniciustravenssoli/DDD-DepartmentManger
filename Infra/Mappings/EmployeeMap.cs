@@ -22,11 +22,6 @@ namespace Infra.Mappings
             builder.HasIndex(x => x.Cpf)
                 .IsUnique();
 
-            builder.Property(x => x.Salario)
-                .IsRequired()
-                .HasMaxLength(20)
-                .HasColumnName("Salario");
-
             builder.Property(x => x.Email)
                 .IsRequired()
                 .HasMaxLength(180)
@@ -40,11 +35,6 @@ namespace Infra.Mappings
             builder.Property(x => x.DataDeEntrada)
                 .IsRequired()
                 .HasColumnName("DataDeEntrada");
-            
-            builder.Property(x => x.SalarioAnual)
-                .IsRequired()
-                .HasMaxLength(30)
-                .HasColumnName("SalarioAnual");
         }
     }
 }

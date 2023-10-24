@@ -13,13 +13,11 @@ namespace Domain.Entities
 {
     public class Employee : Base
     {
-        public Employee(string nome, string cpf, string email, double salario, double salarioAnual, DateTime dataDeEntrada, long departmentId)
+        public Employee(string nome, string cpf, string email, DateTime dataDeEntrada, long departmentId)
         {
             Nome = nome;
             Cpf = cpf;
             Email = email;
-            Salario = salario;
-            SalarioAnual = salario * 12;
             DataDeEntrada = dataDeEntrada;
             DepartmentId = departmentId;
 
@@ -30,8 +28,7 @@ namespace Domain.Entities
         public string Nome { get; set; }
         public string Cpf { get; set; }
         public string Email { get; set; }
-        public double Salario { get; set; }
-        public double SalarioAnual { get; set; }
+
         public DateTime DataDeEntrada { get; set; }
 
 

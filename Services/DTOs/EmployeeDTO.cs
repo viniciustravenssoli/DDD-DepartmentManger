@@ -13,8 +13,6 @@ namespace Services.DTOs
         public string Nome { get; set; }
         public string Cpf { get; set; }
         public string Email { get; set; }
-        public double Salario { get; set; }
-        public double SalarioAnual { get; set; }
         public DateTime DataDeEntrada { get; set; }
         public long DepartmentId { get; set; }
 
