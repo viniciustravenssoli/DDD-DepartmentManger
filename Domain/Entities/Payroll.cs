@@ -37,16 +37,16 @@ namespace Domain.Entities
         public long EmployeeId { get; set; }
         public Employee? Employee { get; set; }
 
-        private void CalcularSalarioBruto() =>
+        public void CalcularSalarioBruto() =>
             SalarioBruto = Valor * Quantidade;
 
-        private void CalcularSalarioLiquido() =>
+        public void CalcularSalarioLiquido() =>
             SalarioLiquido = SalarioBruto - ImpostoIrrf - ImpostoInss;
 
-        private void CalcularFgts() =>
+        public void CalcularFgts() =>
             ImpostoFgts = SalarioBruto * .08;
 
-        private void CalcularInss()
+        public void CalcularInss()
         {
             if (SalarioBruto <= 1693.72)
                 ImpostoInss = SalarioBruto * .08;
@@ -58,7 +58,7 @@ namespace Domain.Entities
                 ImpostoInss = 621.03;
         }
 
-        private void CalcularIrrf()
+        public void CalcularIrrf()
         {
             if (SalarioBruto <= 1903.98)
                 ImpostoIrrf = 0;
@@ -72,7 +72,7 @@ namespace Domain.Entities
                 ImpostoIrrf = SalarioBruto * .275 - 869.39;
         }
 
-         public override bool Validate()
+        public override bool Validate()
         {
             var validator = new PayrollValidator();
             var validation = validator.Validate(this);

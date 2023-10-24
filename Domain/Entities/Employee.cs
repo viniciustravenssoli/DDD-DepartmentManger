@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Core.Exceptions;
 using Domain.Validators;
@@ -33,9 +34,11 @@ namespace Domain.Entities
         public double SalarioAnual { get; set; }
         public DateTime DataDeEntrada { get; set; }
 
-        
+
         public long DepartmentId { get; set; }
         public Department? Department { get; set; }
+        public List<Payroll> Payrolls { get; set; }
+
 
         public override bool Validate()
         {
@@ -56,7 +59,7 @@ namespace Domain.Entities
         {
             var builder = new StringBuilder();
 
-            foreach(var error in _errors)
+            foreach (var error in _errors)
                 builder.AppendLine(error);
 
             return builder.ToString();

@@ -22,10 +22,14 @@ builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 
+builder.Services.AddScoped<IPayrollService, PayrollService>();
+builder.Services.AddScoped<IPayrollRepository, PayrollRepository>();
+
 var AutoMapperConfig = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<Employee, EmployeeDto>().ReverseMap();
                 cfg.CreateMap<Department, DepartmentDto>().ReverseMap();
+                cfg.CreateMap<Payroll, PayrollDTO>().ReverseMap();
             });
 
 builder.Services.AddSingleton(AutoMapperConfig.CreateMapper());

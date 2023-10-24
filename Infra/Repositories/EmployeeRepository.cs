@@ -55,5 +55,11 @@ namespace Infra.Repositories
             return employees;
         }
 
+        public async Task<Employee> GetById(long id)
+        {
+            var employee = await _context.Employees.FirstOrDefaultAsync(x => x.Id == id);
+
+            return employee;
+        }
     }
 }

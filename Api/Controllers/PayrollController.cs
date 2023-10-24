@@ -12,27 +12,27 @@ namespace Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class DepartmentController : ControllerBase
+    public class PayrollController : ControllerBase
     {
-        private readonly IDepartmentService _departmentService;
+        private readonly IPayrollService _payrollService;
 
-        public DepartmentController(IDepartmentService departmentService)
+        public PayrollController(IPayrollService payrollService)
         {
-            _departmentService = departmentService;
+            _payrollService = payrollService;
         }
 
         [HttpPost]
-        [Route("/api/v1/department/create")]
+        [Route("/api/v1/payroll/create")]
 
-        public async Task<IActionResult> Create([FromBody] DepartmentDto departmentDto)
+        public async Task<IActionResult> Create([FromBody] PayrollDTO payrollDTO)
         {
             try
             {
-                var employeeCreated = await _departmentService.Create(departmentDto);
+                var employeeCreated = await _payrollService.Create(payrollDTO);
 
                 return Ok(new ResultViewModel
                 {
-                    Message = "Departamento criado com sucesso",
+                    Message = "Folha de Pagamento criado com sucesso",
                     Success = true,
                     Data = employeeCreated
                 });
@@ -41,10 +41,10 @@ namespace Api.Controllers
             {
                 return BadRequest(Responses.DomainErrorMessage(ex.Message, ex.Errors));
             }
-            catch (Exception)
-            {
-                return StatusCode(500, Responses.ApplicationErrorMessage());
-            }
+            // catch (Exception)
+            // {
+            //     return StatusCode(500, Responses.ApplicationErrorMessage());
+            // }
         }
     }
 }
