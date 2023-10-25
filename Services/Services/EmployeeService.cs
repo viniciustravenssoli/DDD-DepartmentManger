@@ -44,10 +44,12 @@ namespace Services.Services
 
             // ValidateEmployeeLimit(employeeQntd, department);
 
-            var employee = _mapper.Map<Employee>(employeeDto);
-            employee.Department = department;
+            var emplyoee = new Employee(employeeDto.Nome, employeeDto.Cpf, employeeDto.Email, employeeDto.DataDeEntrada, employeeDto.DepartmentId)
+            {
+                Department = department
+            };
 
-            var employeeCreated = await _employeRepository.Create(employee);
+            var employeeCreated = await _employeRepository.Create(emplyoee);
 
             return _mapper.Map<EmployeeDto>(employeeCreated);
         }
