@@ -37,23 +37,29 @@ namespace Domain.Entities
         public long EmployeeId { get; set; }
         public Employee? Employee { get; set; }
 
-        public void CalcularSalarioBruto() =>
-            SalarioBruto = Valor * Quantidade;
+        public void CalcularSalarioBruto()
+        {
+            SalarioBruto = Math.Round(Valor * Quantidade, 3);
+        }
 
-        public void CalcularSalarioLiquido() =>
-            SalarioLiquido = SalarioBruto - ImpostoIrrf - ImpostoInss;
+        public void CalcularSalarioLiquido()
+        {
+            SalarioLiquido = Math.Round(SalarioBruto - ImpostoIrrf - ImpostoInss, 3);
+        }
 
-        public void CalcularFgts() =>
-            ImpostoFgts = SalarioBruto * .08;
+        public void CalcularFgts()
+        {
+            ImpostoFgts = Math.Round(SalarioBruto * 0.08, 3);
+        }
 
         public void CalcularInss()
         {
             if (SalarioBruto <= 1693.72)
-                ImpostoInss = SalarioBruto * .08;
+                ImpostoInss = Math.Round(SalarioBruto * 0.08, 3);
             else if (SalarioBruto <= 2822.9)
-                ImpostoInss = SalarioBruto * .09;
+                ImpostoInss = Math.Round(SalarioBruto * 0.09, 3);
             else if (SalarioBruto <= 5645.8)
-                ImpostoInss = SalarioBruto * .11;
+                ImpostoInss = Math.Round(SalarioBruto * 0.11, 3);
             else
                 ImpostoInss = 621.03;
         }
@@ -63,15 +69,14 @@ namespace Domain.Entities
             if (SalarioBruto <= 1903.98)
                 ImpostoIrrf = 0;
             else if (SalarioBruto <= 2826.65)
-                ImpostoIrrf = SalarioBruto * .075 - 142.8;
+                ImpostoIrrf = Math.Round(SalarioBruto * 0.075 - 142.8, 3);
             else if (SalarioBruto <= 3751.05)
-                ImpostoIrrf = SalarioBruto * .15 - 354.8;
+                ImpostoIrrf = Math.Round(SalarioBruto * 0.15 - 354.8, 3);
             else if (SalarioBruto <= 4664.68)
-                ImpostoIrrf = SalarioBruto * .225 - 636.13;
+                ImpostoIrrf = Math.Round(SalarioBruto * 0.225 - 636.13, 3);
             else
-                ImpostoIrrf = SalarioBruto * .275 - 869.39;
+                ImpostoIrrf = Math.Round(SalarioBruto * 0.275 - 869.39, 3);
         }
-
         public override bool Validate()
         {
             var validator = new PayrollValidator();
