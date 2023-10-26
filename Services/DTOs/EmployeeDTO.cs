@@ -13,8 +13,8 @@ namespace Services.DTOs
         public long Id { get; set; }
         public string Nome { get; set; }
 
-        [Required(ErrorMessage = "O campo CPF é obrigatório.")]
-        [StringLength(11, ErrorMessage = "O campo deve ter exatamente 11 caracteres.")]
+        //[Required(ErrorMessage = "O campo CPF é obrigatório.")]
+        //[StringLength(11, ErrorMessage = "O campo deve ter exatamente 11 caracteres.")]
         public string Cpf { get; set; }
         
         [EmailAddress]

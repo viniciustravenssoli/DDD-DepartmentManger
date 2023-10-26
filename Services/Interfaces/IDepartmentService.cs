@@ -9,6 +9,8 @@ namespace Services.Interfaces
     public interface IDepartmentService
     {
         Task<DepartmentDto> Create(DepartmentDto departmentDto);
+        Task<DepartmentDto> Update(DepartmentDto departmentDto);
         Task<DepartmentDto> GetDepartmentById(long departmentId);
+        
     }
 }

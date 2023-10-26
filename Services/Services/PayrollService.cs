@@ -43,5 +43,10 @@ namespace Services.Services
 
             return _mapper.Map<PayrollDTO>(payrollCreated);
         }
+
+        public Task<PayrollDTO> Update(PayrollDTO payrollDTO)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

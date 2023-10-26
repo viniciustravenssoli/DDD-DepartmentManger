@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Api.Reponses;
+using AutoMapper;
 using Core.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Services.DTOs;
@@ -15,10 +17,12 @@ namespace Api.Controllers
     public class EmployeeController : ControllerBase
     {
         private readonly IEmployeeService _employeeService;
+        private readonly IMapper _mapper;
 
-        public EmployeeController(IEmployeeService employeeService)
+        public EmployeeController(IEmployeeService employeeService, IMapper mapper)
         {
             _employeeService = employeeService;
+            _mapper = mapper;
         }
 
         [HttpPost]
@@ -45,6 +49,31 @@ namespace Api.Controllers
             {
                 return StatusCode(500, Responses.ApplicationErrorMessage());
             }
+        }
+
+        [HttpPut]
+        [Route("/api/v1/employee/update")]
+        public async Task<IActionResult> Update([FromBody] EmployeeDto employeeDto)
+        {
+            try
+            {
+                var employeeUpdated = await _employeeService.Update(employeeDto);
+
+                return Ok(new ResultViewModel
+                {
+                    Message = "Funcionario atualizado com sucesso",
+                    Success = true,
+                    Data = employeeUpdated
+                });
+            }
+            catch (DomainExceptions ex)
+            {
+                return BadRequest(Responses.DomainErrorMessage(ex.Message, ex.Errors));
+            }
+            // catch (Exception)
+            // {
+            //     return StatusCode(500, Responses.ApplicationErrorMessage());
+            // }
         }
     }
 }

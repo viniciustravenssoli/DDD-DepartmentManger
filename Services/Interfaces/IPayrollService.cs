@@ -10,5 +10,6 @@ namespace Services.Interfaces
     public interface IPayrollService
     {
         Task<PayrollDTO> Create(PayrollDTO payrollDTO);
+        Task<PayrollDTO> Update(PayrollDTO payrollDTO);
     }
 }

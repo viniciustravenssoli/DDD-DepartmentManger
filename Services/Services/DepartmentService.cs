@@ -55,5 +55,18 @@ namespace Services.Services
             return _mapper.Map<DepartmentDto>(department);
         }
 
+        public async Task<DepartmentDto> Update(DepartmentDto departmentDto)
+        {
+            var departmentExist = await _departmentRepository.Get(departmentDto.Id);
+
+            if (departmentExist == null)
+                throw new DomainExceptions("Nao existe nenhum usuario com o Id informado");
+            
+            var department = _mapper.Map<Department>(departmentDto);
+
+            var departmentUpdated = await _departmentRepository.Update(department);
+
+            return _mapper.Map<DepartmentDto>(departmentUpdated);
+        }
     }
 }

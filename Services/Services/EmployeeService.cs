@@ -76,5 +76,19 @@ namespace Services.Services
             }
             return false;
         }
+
+        public async Task<EmployeeDto> Update(EmployeeDto employeeDto)
+        {
+            var employeeExists = await _employeRepository.Get(employeeDto.Id);
+
+            if (employeeExists == null)
+                throw new DomainExceptions("Nao existe nenhum employee com o Id informado");
+            
+            var employee = _mapper.Map<Employee>(employeeDto);
+
+            var employeeUpdated = await _employeRepository.Update(employee);
+
+            return _mapper.Map<EmployeeDto>(employeeUpdated);
+        }
     }
 }

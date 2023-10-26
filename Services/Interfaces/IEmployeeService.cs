@@ -9,5 +9,6 @@ namespace Services.Interfaces
     public interface IEmployeeService
     {
         Task<EmployeeDto> Create(EmployeeDto employeeDto);
+        Task<EmployeeDto> Update(EmployeeDto employeeDto);
     }
 }
