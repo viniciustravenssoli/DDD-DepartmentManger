@@ -70,5 +70,55 @@ namespace Api.Controllers
                 return StatusCode(500, Responses.ApplicationErrorMessage());
             }
         }
+
+        [HttpGet]
+        [Route("/api/v1/department/get-all")]
+        public async Task<IActionResult> GetAll()
+        {
+            try
+            {
+                var departments = await _departmentService.Get();
+
+                return Ok(new ResultViewModel
+                {
+                    Message = "Departamentos retornados com sucesso",
+                    Success = true,
+                    Data = departments
+                });
+            }
+            catch (DomainExceptions ex)
+            {
+                return BadRequest(Responses.DomainErrorMessage(ex.Message, ex.Errors));
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, Responses.ApplicationErrorMessage());
+            }
+        }
+
+        [HttpGet]
+        [Route("/api/v1/department/get/{id}")]
+        public async Task<IActionResult> GetById(long id)
+        {
+            try
+            {
+                var employee = await _departmentService.Get(id);
+
+                return Ok(new ResultViewModel
+                {
+                    Message = "Departamento retornado com sucesso",
+                    Success = true,
+                    Data = employee
+                });
+            }
+            catch (DomainExceptions ex)
+            {
+                return BadRequest(Responses.DomainErrorMessage(ex.Message, ex.Errors));
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, Responses.ApplicationErrorMessage());
+            }
+        }
     }
 }

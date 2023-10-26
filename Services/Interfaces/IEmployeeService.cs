@@ -10,5 +10,8 @@ namespace Services.Interfaces
     {
         Task<EmployeeDto> Create(EmployeeDto employeeDto);
         Task<EmployeeDto> Update(EmployeeDto employeeDto);
+        Task Remove(long id);
+        Task<EmployeeDto> Get(long id);
+        Task<List<EmployeeDto>> Get();
     }
 }

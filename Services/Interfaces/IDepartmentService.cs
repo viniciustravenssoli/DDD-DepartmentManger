@@ -11,6 +11,9 @@ namespace Services.Interfaces
         Task<DepartmentDto> Create(DepartmentDto departmentDto);
         Task<DepartmentDto> Update(DepartmentDto departmentDto);
         Task<DepartmentDto> GetDepartmentById(long departmentId);
+        Task Remove(long id);
+        Task<DepartmentDto> Get(long id);
+        Task<List<DepartmentDto>> Get();
         
     }
 }

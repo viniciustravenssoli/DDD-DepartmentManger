@@ -43,6 +43,20 @@ namespace Services.Services
             return _mapper.Map<DepartmentDto>(departmentCreated);
         }
 
+        public async Task<DepartmentDto> Get(long id)
+        {
+            var department = await _departmentRepository.Get(id);
+
+            return _mapper.Map<DepartmentDto>(department);
+        }
+
+        public async Task<List<DepartmentDto>> Get()
+        {
+            var department = await _departmentRepository.Get();
+
+            return _mapper.Map<List<DepartmentDto>>(department);
+        }
+
         public async Task<DepartmentDto> GetDepartmentById(long departmentId)
         {
             var department = await _departmentRepository.Get(departmentId);
@@ -55,13 +69,18 @@ namespace Services.Services
             return _mapper.Map<DepartmentDto>(department);
         }
 
+        public async Task Remove(long id)
+        {
+            await _departmentRepository.Remove(id);
+        }
+
         public async Task<DepartmentDto> Update(DepartmentDto departmentDto)
         {
             var departmentExist = await _departmentRepository.Get(departmentDto.Id);
 
             if (departmentExist == null)
                 throw new DomainExceptions("Nao existe nenhum usuario com o Id informado");
-            
+
             var department = _mapper.Map<Department>(departmentDto);
 
             var departmentUpdated = await _departmentRepository.Update(department);

@@ -37,13 +37,9 @@ namespace Services.Services
             {
                 throw new DomainExceptions($"O departamento {department.DepartmentName} atingiu seu limite máximo de {department.EmployeeLimit} funcionários");
             }
-
             // var employeeQntd = await _employeRepository.GetNumbersOfEmployeesByDepartament(employeeDto.DepartmentId);
-
             // ValidateDepartment(department);
-
             // ValidateEmployeeLimit(employeeQntd, department);
-
             var emplyoee = new Employee(employeeDto.Nome, employeeDto.Cpf, employeeDto.Email, employeeDto.DataDeEntrada, employeeDto.DepartmentId)
             {
                 Department = department
@@ -89,6 +85,25 @@ namespace Services.Services
             var employeeUpdated = await _employeRepository.Update(employee);
 
             return _mapper.Map<EmployeeDto>(employeeUpdated);
+        }
+
+        public async Task Remove(long id)
+        {
+            await _employeRepository.Remove(id);
+        }
+
+        public async Task<EmployeeDto> Get(long id)
+        {
+            var employee = await _employeRepository.Get(id);
+
+            return _mapper.Map<EmployeeDto>(employee);
+        }
+
+        public async Task<List<EmployeeDto>> Get()
+        {
+            var employees = await _employeRepository.Get();
+
+            return _mapper.Map<List<EmployeeDto>>(employees);
         }
     }
 }
