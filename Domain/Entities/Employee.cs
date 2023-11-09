@@ -28,10 +28,7 @@ namespace Domain.Entities
         public string Nome { get; set; }
         public string Cpf { get; set; }
         public string Email { get; set; }
-
         public DateTime DataDeEntrada { get; set; }
-
-
         public long DepartmentId { get; set; }
         public Department? Department { get; set; }
         public List<Payroll> Payrolls { get; set; }

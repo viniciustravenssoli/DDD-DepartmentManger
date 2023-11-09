@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infra.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231011184935_Initial")]
-    partial class Initial
+    [Migration("20231109193401_AddingUserAndRoles")]
+    partial class AddingUserAndRoles
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -71,16 +71,6 @@ namespace Infra.Migrations
                         .HasMaxLength(120)
                         .HasColumnType("TEXT")
                         .HasColumnName("Nome");
-
-                    b.Property<double>("Salario")
-                        .HasMaxLength(20)
-                        .HasColumnType("REAL")
-                        .HasColumnName("Salario");
-
-                    b.Property<double>("SalarioAnual")
-                        .HasMaxLength(30)
-                        .HasColumnType("REAL")
-                        .HasColumnName("SalarioAnual");
 
                     b.HasKey("Id");
 
@@ -149,10 +139,53 @@ namespace Infra.Migrations
                     b.ToTable("Payrolls", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Entities.Role", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("RoleName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("NVARCHAR")
+                        .HasColumnName("RoleName");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Role", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.User", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("User", (string)null);
+                });
+
+            modelBuilder.Entity("UserRole", b =>
+                {
+                    b.Property<long>("RoleId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("RoleId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserRole");
+                });
+
             modelBuilder.Entity("Domain.Entities.Employee", b =>
                 {
                     b.HasOne("Domain.Entities.Department", "Department")
-                        .WithMany()
+                        .WithMany("Employees")
                         .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -163,12 +196,84 @@ namespace Infra.Migrations
             modelBuilder.Entity("Domain.Entities.Payroll", b =>
                 {
                     b.HasOne("Domain.Entities.Employee", "Employee")
-                        .WithMany()
+                        .WithMany("Payrolls")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Employee");
+                });
+
+            modelBuilder.Entity("Domain.Entities.User", b =>
+                {
+                    b.OwnsOne("Domain.ValueObjects.Email", "Email", b1 =>
+                        {
+                            b1.Property<long>("UserId")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<string>("Adress")
+                                .IsRequired()
+                                .HasMaxLength(250)
+                                .HasColumnType("NVARCHAR")
+                                .HasColumnName("Email");
+
+                            b1.HasKey("UserId");
+
+                            b1.ToTable("User");
+
+                            b1.WithOwner()
+                                .HasForeignKey("UserId");
+                        });
+
+                    b.OwnsOne("Domain.ValueObjects.Password", "PasswordHash", b1 =>
+                        {
+                            b1.Property<long>("UserId")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<string>("Pass")
+                                .IsRequired()
+                                .HasMaxLength(500)
+                                .HasColumnType("NVARCHAR")
+                                .HasColumnName("PasswordHash");
+
+                            b1.HasKey("UserId");
+
+                            b1.ToTable("User");
+
+                            b1.WithOwner()
+                                .HasForeignKey("UserId");
+                        });
+
+                    b.Navigation("Email")
+                        .IsRequired();
+
+                    b.Navigation("PasswordHash")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("UserRole", b =>
+                {
+                    b.HasOne("Domain.Entities.Role", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Entities.Department", b =>
+                {
+                    b.Navigation("Employees");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Employee", b =>
+                {
+                    b.Navigation("Payrolls");
                 });
 #pragma warning restore 612, 618
         }

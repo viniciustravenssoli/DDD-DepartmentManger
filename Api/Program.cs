@@ -25,6 +25,9 @@ builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 builder.Services.AddScoped<IPayrollService, PayrollService>();
 builder.Services.AddScoped<IPayrollRepository, PayrollRepository>();
 
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
 var AutoMapperConfig = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<Employee, EmployeeDto>().ReverseMap();

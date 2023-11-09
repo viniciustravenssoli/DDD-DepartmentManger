@@ -4,7 +4,7 @@
 
 namespace Infra.Migrations
 {
-    public partial class Initialll : Migration
+    public partial class FixingImplement : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
