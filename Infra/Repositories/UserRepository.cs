@@ -24,7 +24,6 @@ namespace Infra.Repositories
                                     (
                                         x => x.Email.Adress.ToLower() == email.ToLower()
                                     )
-                                    .AsNoTracking()
                                     .ToListAsync();
                                     
             return user.FirstOrDefault();

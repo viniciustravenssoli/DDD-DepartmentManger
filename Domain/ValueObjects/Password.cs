@@ -11,7 +11,7 @@ namespace Domain.ValueObjects
     {
         public Password(string pass)
         {
-            Pass = EncryptPassword(pass);
+            Pass = pass;
         }
 
         public string Pass { get; private set; }

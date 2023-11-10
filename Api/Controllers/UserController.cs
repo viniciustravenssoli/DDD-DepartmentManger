@@ -40,11 +40,37 @@ namespace Api.Controllers
             {
                 return BadRequest(Responses.DomainErrorMessage(ex.Message, ex.Errors));
             }
-            // catch (Exception)
-            // {
-            //     return StatusCode(500, Responses.ApplicationErrorMessage());
-            // }
+            catch (Exception)
+            {
+                return StatusCode(500, Responses.ApplicationErrorMessage());
+            }
         }
+
+        [HttpPost]
+        [Route("/api/v1/user/login")]
+        public async Task<IActionResult> Login([FromBody] UserDTO userDTO)
+        {
+            try
+            {
+                var loggedUser = await _userService.Login(userDTO);
+
+                return Ok(new ResultViewModel
+                {
+                    Message = "Usuario logado com sucesso",
+                    Success = true,
+                    Data = loggedUser
+                });
+            }
+            catch (DomainExceptions ex)
+            {
+                return BadRequest(Responses.DomainErrorMessage(ex.Message, ex.Errors));
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, Responses.ApplicationErrorMessage());
+            }
+        }
+        
 
     }
 }
