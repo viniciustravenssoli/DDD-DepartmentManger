@@ -29,28 +29,18 @@ namespace Infra.Repositories
             return user.FirstOrDefault();
         }
 
-        public async Task AddRoleToUser(long userId, string roleName)
+        public async Task<bool> AddRoleToUser(long userId, string roleName)
         {
             var user = await _context.Users.Include(u => u.Roles).FirstOrDefaultAsync(u => u.Id == userId);
+            var role = await _context.Roles.FirstOrDefaultAsync(r => r.RoleName == roleName);
 
-            Role role = await _context.Roles.FirstOrDefaultAsync(r => r.RoleName == roleName);
-
-            if (role == null)
-            {
-                // Se a função não existir, crie uma nova
-                role = new Role(roleName);
-                _context.Roles.Add(role);
-            }
-
-            if (user != null)
+            if (user != null && role != null)
             {
                 user.AddRole(role);
                 await _context.SaveChangesAsync();
+                return true; 
             }
-            else
-            {
-                throw new InvalidOperationException("User not found.");
-            }
+            return false;
         }
     }
 }

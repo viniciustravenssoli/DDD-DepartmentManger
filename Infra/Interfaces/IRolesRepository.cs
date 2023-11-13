@@ -8,6 +8,6 @@ namespace Infra.Interfaces
 {
     public interface IRolesRepository : IBaseRepository<Role>
     {
-        
+        Task<Role> FindByName(string roleName);
     }
 }

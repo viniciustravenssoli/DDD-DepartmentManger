@@ -15,10 +15,12 @@ namespace Api.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
+        private readonly IRoleService _roleService;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, IRoleService roleService)
         {
             _userService = userService;
+            _roleService = roleService;
         }
 
         [HttpPost]
@@ -78,6 +80,31 @@ namespace Api.Controllers
             try
             {
                 await _userService.AddRoleToUser(addRole.UserId, addRole.Role);
+
+                return Ok(new ResultViewModel
+                {
+                    Message = "Role vinculada ao usuario com sucesso",
+                    Success = true,
+                    Data = null
+                });
+            }
+            catch (DomainExceptions ex)
+            {
+                return BadRequest(Responses.DomainErrorMessage(ex.Message, ex.Errors));
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, Responses.ApplicationErrorMessage());
+            }
+        }
+
+        [HttpPost]
+        [Route("/api/v1/user/Create-Role")]
+        public async Task<IActionResult> CreateRole([FromBody] AddRole addRole)
+        {
+            try
+            {
+                await _roleService.Create(addRole.Role);
 
                 return Ok(new ResultViewModel
                 {

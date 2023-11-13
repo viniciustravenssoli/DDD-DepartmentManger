@@ -79,9 +79,15 @@ namespace Services.Services
 
         }
 
-        public async Task AddRoleToUser(long userId, string roleName) // Suponhamos que você tenha o ID do usuário e o nome da função
+        public async Task<bool> AddRoleToUser(long userId, string roleName) // Suponhamos que você tenha o ID do usuário e o nome da função
         {
-            await _userRepository.AddRoleToUser(userId, roleName);
+            var result = await _userRepository.AddRoleToUser(userId, roleName);
+
+            if (result is false)
+            {
+                throw new DomainExceptions("Usuario ou role nao encontrado, por favor verifique");
+            }
+            return true;
         }
 
 

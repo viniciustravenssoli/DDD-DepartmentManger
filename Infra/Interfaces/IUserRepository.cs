@@ -9,6 +9,6 @@ namespace Infra.Interfaces
     public interface IUserRepository : IBaseRepository<User>
     {
         Task<User> GetByEmail(string email);
-        Task AddRoleToUser(long userId, string roleName);
+        Task<bool> AddRoleToUser(long userId, string roleName);
     }
 }

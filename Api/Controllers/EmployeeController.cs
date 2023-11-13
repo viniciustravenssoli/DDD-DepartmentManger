@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Api.Reponses;
 using AutoMapper;
 using Core.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.DTOs;
 using Services.Interfaces;
@@ -76,6 +77,7 @@ namespace Api.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet]
         [Route("/api/v1/employee/get-all")]
         public async Task<IActionResult> GetAll()

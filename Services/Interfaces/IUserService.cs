@@ -16,6 +16,6 @@ namespace Services.Interfaces
         Task Remove(long id);
         Task<UserDTO> Get(long id);
         Task<List<UserDTO>> Get();
-        Task AddRoleToUser(long userId, string roleName);
+        Task<bool> AddRoleToUser(long userId, string roleName);
     }
 }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Domain.Entities;
 using Infra.Context;
 using Infra.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infra.Repositories
 {
@@ -14,6 +15,18 @@ namespace Infra.Repositories
         public RoleRepository(AppDbContext context) : base(context)
         {
             _context = context;
+        }
+
+        public async Task<Role> FindByName(string roleName)
+        {
+            var role = await _context.Roles
+                                    .Where
+                                    (
+                                        x => x.RoleName.ToLower() == roleName.ToLower()
+                                    )
+                                    .ToListAsync();
+
+            return role.FirstOrDefault();
         }
     }
 }
