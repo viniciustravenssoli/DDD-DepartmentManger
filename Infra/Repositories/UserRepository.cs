@@ -25,8 +25,32 @@ namespace Infra.Repositories
                                         x => x.Email.Adress.ToLower() == email.ToLower()
                                     )
                                     .ToListAsync();
-                                    
+
             return user.FirstOrDefault();
+        }
+
+        public async Task AddRoleToUser(long userId, string roleName)
+        {
+            var user = await _context.Users.Include(u => u.Roles).FirstOrDefaultAsync(u => u.Id == userId);
+
+            Role role = await _context.Roles.FirstOrDefaultAsync(r => r.RoleName == roleName);
+
+            if (role == null)
+            {
+                // Se a função não existir, crie uma nova
+                role = new Role(roleName);
+                _context.Roles.Add(role);
+            }
+
+            if (user != null)
+            {
+                user.AddRole(role);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                throw new InvalidOperationException("User not found.");
+            }
         }
     }
 }

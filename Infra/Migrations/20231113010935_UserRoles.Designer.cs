@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infra.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231109193401_AddingUserAndRoles")]
-    partial class AddingUserAndRoles
+    [Migration("20231113010935_UserRoles")]
+    partial class UserRoles
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

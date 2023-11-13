@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Core.Exceptions;
 using Domain.Entities;
 using Infra.Interfaces;
 using Microsoft.Extensions.Configuration;
@@ -61,7 +62,7 @@ namespace Services.Services
             var userExists = await _userRepository.GetByEmail(userDTO.Email);
 
             if (userExists is null)
-                throw new Exception("Usuario ou senha incorreto, por favor verifique email e senha");
+                throw new DomainExceptions("Usuario ou senha incorreto, por favor verifique email e senha");
 
             var correctPass = BCrypt.Net.BCrypt.Verify(userDTO.Password, userExists.PasswordHash.Pass);
 
@@ -73,10 +74,16 @@ namespace Services.Services
             }
             else
             {
-                throw new Exception("Usuario ou Senha incorreto, por favor verifique email e senha");
+                throw new DomainExceptions("Usuario ou Senha incorreto, por favor verifique email e senha");
             }
 
         }
+
+        public async Task AddRoleToUser(long userId, string roleName) // Suponhamos que você tenha o ID do usuário e o nome da função
+        {
+            await _userRepository.AddRoleToUser(userId, roleName);
+        }
+
 
         public Task Remove(long id)
         {

@@ -70,6 +70,31 @@ namespace Api.Controllers
                 return StatusCode(500, Responses.ApplicationErrorMessage());
             }
         }
+
+        [HttpPost]
+        [Route("/api/v1/user/AddRole")]
+        public async Task<IActionResult> AddRole([FromBody] AddRole addRole)
+        {
+            try
+            {
+                await _userService.AddRoleToUser(addRole.UserId, addRole.Role);
+
+                return Ok(new ResultViewModel
+                {
+                    Message = "Role Adicionada com sucesso",
+                    Success = true,
+                    Data = null
+                });
+            }
+            catch (DomainExceptions ex)
+            {
+                return BadRequest(Responses.DomainErrorMessage(ex.Message, ex.Errors));
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, Responses.ApplicationErrorMessage());
+            }
+        }
         
 
     }

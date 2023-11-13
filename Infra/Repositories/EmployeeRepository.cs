@@ -21,7 +21,7 @@ namespace Infra.Repositories
         public async Task<Employee> GetByCpf(string cpf)
         {
             var employees = await _context.Employees.FirstOrDefaultAsync(x => x.Cpf == cpf);
-
+            
             return employees;
         }
 

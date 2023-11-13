@@ -18,7 +18,6 @@ namespace Domain.Entities
         }
         public string RoleName { get; private set; }
 
-        [JsonIgnore]
         public ICollection<User> Users { get; } = new List<User>();
 
         public static implicit operator Role(string roleName) => new Role(roleName);

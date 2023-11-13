@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infra.Migrations
 {
-    public partial class AddingUserAndRoles : Migration
+    public partial class UserRoles : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
