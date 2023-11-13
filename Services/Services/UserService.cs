@@ -114,7 +114,6 @@ namespace Services.Services
                 Subject = ManageClains(user),
                 SigningCredentials = credentials,
                 Expires = DateTime.UtcNow.AddHours(3),
-
             };
 
             var token = handler.CreateToken(descriptor);

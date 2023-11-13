@@ -75,11 +75,11 @@ namespace Api.Controllers
 
         [HttpPost]
         [Route("/api/v1/user/AddRole")]
-        public async Task<IActionResult> AddRole([FromBody] AddRole addRole)
+        public async Task<IActionResult> AddRole([FromBody] AddRoleToUserDTO addRoleToUserDTO)
         {
             try
             {
-                await _userService.AddRoleToUser(addRole.UserId, addRole.Role);
+                await _userService.AddRoleToUser(addRoleToUserDTO.UserId, addRoleToUserDTO.Role);
 
                 return Ok(new ResultViewModel
                 {
@@ -104,11 +104,11 @@ namespace Api.Controllers
         {
             try
             {
-                await _roleService.Create(addRole.Role);
+                await _roleService.Create(addRole.RoleName);
 
                 return Ok(new ResultViewModel
                 {
-                    Message = "Role Adicionada com sucesso",
+                    Message = "Role Criada com sucesso",
                     Success = true,
                     Data = null
                 });
