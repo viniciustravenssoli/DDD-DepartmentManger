@@ -23,7 +23,8 @@ IConfiguration _configuration = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
             .Build();
 
-var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Secret"]); 
+var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Secret"]);
+
 builder.Services.AddAuthentication(options =>
     {
         options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -75,7 +76,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
     {
-        c.SwaggerDoc("v1", new OpenApiInfo { Title = "Nome da sua API", Version = "v1" });
+        c.SwaggerDoc("v1", new OpenApiInfo { Title = "DepartamentManager", Version = "v1" });
 
         // Configuração para autenticação usando Bearer token (JWT)
         c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme

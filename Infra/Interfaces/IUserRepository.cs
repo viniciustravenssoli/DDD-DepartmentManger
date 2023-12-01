@@ -10,5 +10,6 @@ namespace Infra.Interfaces
     {
         Task<User> GetByEmail(string email);
         Task<bool> AddRoleToUser(long userId, string roleName);
+        Task<User> GetByEmailUserWithRoles(string email);
     }
 }

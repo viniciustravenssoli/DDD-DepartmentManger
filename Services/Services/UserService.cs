@@ -59,23 +59,21 @@ namespace Services.Services
 
         public async Task<string> Login(UserDTO userDTO)
         {
-            var userExists = await _userRepository.GetByEmail(userDTO.Email);
+            var userExists = await _userRepository.GetByEmailUserWithRoles(userDTO.Email);
 
             if (userExists is null)
                 throw new DomainExceptions("Usuario ou senha incorreto, por favor verifique email e senha");
 
             var correctPass = BCrypt.Net.BCrypt.Verify(userDTO.Password, userExists.PasswordHash.Pass);
 
-            if (correctPass)
-            {
-                var token = GenerateToken(userExists);
-                
-                return token;
-            }
-            else
+            if (!correctPass)
             {
                 throw new DomainExceptions("Usuario ou Senha incorreto, por favor verifique email e senha");
             }
+
+            var token = GenerateToken(userExists);
+
+            return token;
 
         }
 
@@ -105,9 +103,9 @@ namespace Services.Services
         {
             var handler = new JwtSecurityTokenHandler();
 
-            var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_configuration["Jwt:Secret"])); 
+            var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_configuration["Jwt:Secret"]));
 
-            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256); 
+            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var descriptor = new SecurityTokenDescriptor
             {
@@ -124,13 +122,13 @@ namespace Services.Services
         private ClaimsIdentity ManageClains(User user)
         {
             var cli = new ClaimsIdentity();
+            cli.AddClaim(new Claim("Id", user.Id.ToString()));
             cli.AddClaim(new Claim(ClaimTypes.Name, user.Email));
-            cli.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
 
             foreach (var role in user.Roles)
                 cli.AddClaim(new Claim(ClaimTypes.Role, role));
 
-            return cli; 
+            return cli;
         }
     }
 }

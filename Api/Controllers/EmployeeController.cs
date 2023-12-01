@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Api.Reponses;
 using AutoMapper;
 using Core.Exceptions;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.DTOs;
@@ -116,6 +117,33 @@ namespace Api.Controllers
                     Message = "Funcionario retornado com sucesso",
                     Success = true,
                     Data = employee
+                });
+            }
+            catch (DomainExceptions ex)
+            {
+                return BadRequest(Responses.DomainErrorMessage(ex.Message, ex.Errors));
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, Responses.ApplicationErrorMessage());
+            }
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Manager" )]
+        [HttpDelete]
+        [Route("/api/v1/employee/remove/{userId}")]
+
+        public async Task<IActionResult> Remove(long userId)
+        {
+            try
+            {
+                await _employeeService.Remove(userId);
+
+                return Ok(new ResultViewModel
+                {
+                    Message = "Employee removed!",
+                    Success = false,
+                    Data = null
                 });
             }
             catch (DomainExceptions ex)

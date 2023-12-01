@@ -42,5 +42,18 @@ namespace Infra.Repositories
             }
             return false;
         }
+
+        public async Task<User> GetByEmailUserWithRoles(string email)
+        {
+            var user = await _context.Users.Include(x => x.Roles)
+                                .Where
+                                (
+                                    x => x.Email.Adress.ToLower() == email.ToLower()
+                                )
+                                .ToListAsync();
+            
+            return user.FirstOrDefault();
+                                
+        }
     }
 }
