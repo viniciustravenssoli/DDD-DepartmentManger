@@ -31,13 +31,15 @@ namespace Services.Services
             var userExists = await _userRepository.GetByEmail(userCreateDTO.Email);
 
             if (userExists != null)
-                throw new Exception("Já existe um usuário cadastrado com o email informado.");
+                throw new DomainExceptions("Já existe um usuário cadastrado com o email informado.");
 
             userCreateDTO.Password = BCrypt.Net.BCrypt.HashPassword(userCreateDTO.Password);
 
             var user = new User(userCreateDTO.Email, userCreateDTO.Password);
 
             await _userRepository.Create(user);
+
+            userCreateDTO.Password = "";
 
             return userCreateDTO;
         }

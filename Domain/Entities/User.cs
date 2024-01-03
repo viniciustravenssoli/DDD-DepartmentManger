@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Domain.ValueObjects;
 
@@ -19,6 +20,7 @@ namespace Domain.Entities
         }
 
         public Email Email { get; private set; }
+        [JsonIgnore]
         public Password PasswordHash { get; private set; }
         public ICollection<Role> Roles => _roles;
 
