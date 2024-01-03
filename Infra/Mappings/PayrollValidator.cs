@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Domain.Entities;
+using Domain.EntitiesConstants;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -16,37 +17,37 @@ namespace Infra.Mappings
 
             builder.Property(x => x.ImpostoFgts)
                 .IsRequired()
-                .HasMaxLength(10)
+                .HasMaxLength(PayrollConstants.ImpostoFgts)
                 .HasColumnName("ImpostoFgts");
 
             builder.Property(x => x.ImpostoInss)
                 .IsRequired()
-                .HasMaxLength(10)
+                .HasMaxLength(PayrollConstants.ImpostoInss)
                 .HasColumnName("ImpostoInss");
             
             builder.Property(x => x.ImpostoIrrf)
                 .IsRequired()
-                .HasMaxLength(10)
+                .HasMaxLength(PayrollConstants.ImpostoIrrf)
                 .HasColumnName("ImpostoIrrf");
             
             builder.Property(x => x.SalarioBruto)
                 .IsRequired()
-                .HasMaxLength(15)
+                .HasMaxLength(PayrollConstants.SalarioBruto)
                 .HasColumnName("salarioBruto");
             
             builder.Property(x => x.SalarioLiquido)
                 .IsRequired()
-                .HasMaxLength(15)
+                .HasMaxLength(PayrollConstants.SalarioLiquido)
                 .HasColumnName("salarioLiquido");
 
             builder.Property(x => x.Valor)
                 .IsRequired()
-                .HasMaxLength(9)
+                .HasMaxLength(PayrollConstants.Valor)
                 .HasColumnName("valorHora");
 
             builder.Property(x => x.Quantidade)
                 .IsRequired()
-                .HasMaxLength(2)
+                .HasMaxLength(PayrollConstants.Quantidade)
                 .HasColumnName("quantidadeDeHoras");
         }
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Domain.Entities;
+using Domain.EntitiesConstants;
 using FluentValidation;
 
 namespace Domain.Validators
@@ -20,16 +21,11 @@ namespace Domain.Validators
 
             RuleFor(x => x.Nome)
                 .NotNull()
-                .WithMessage("O nome nao pode ser nulo")
+                .Length(EmployeeConstants.MinName, EmployeeConstants.MaxName)
+                .WithMessage("O nome nao pode ser nulo menor que 3 ou maior que 80")
 
                 .NotEmpty()
-                .WithMessage("O nome nao pode ser vazio")
-
-                .MinimumLength(3)
-                .WithMessage("O nome deve ter 3 ou mais caracteres")
-
-                .MaximumLength(80)
-                .WithMessage("O Nome deve ter no maximo 30 caracteres");
+                .WithMessage("O nome nao pode ser vazio");
 
             RuleFor(x => x.Cpf)
                 .NotNull()
@@ -38,11 +34,11 @@ namespace Domain.Validators
                 .NotEmpty()
                 .WithMessage("O nome nao pode ser vazio")
 
-                .MinimumLength(11)
-                .WithMessage("O cpf deve ter 11 ou mais caracteres")
+                .Length(11, 11)
+                .WithMessage("O cpf deve ter 11 caracteres")
 
-                .MaximumLength(11)
-                .WithMessage("O cpf deve ter no maximo 11 caracteres");
+                .Matches("^[0-9]*$")
+                .WithMessage("O CPF deve conter apenas números");
         }
     }
 }

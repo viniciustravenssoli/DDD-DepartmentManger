@@ -11,5 +11,6 @@ namespace Services.Interfaces
     {
         Task<PayrollDTO> Create(PayrollDTO payrollDTO);
         Task<PayrollDTO> Update(PayrollDTO payrollDTO);
+        Task<List<PayrollDTO>> GetAllEmployeePayroll(int id);
     }
 }

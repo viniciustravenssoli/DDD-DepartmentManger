@@ -26,20 +26,20 @@ namespace Services.Services
             _configuration = configuration;
         }
 
-        public async Task<UserDTO> Create(UserDTO userDTO)
+        public async Task<UserCreateDTO> Create(UserCreateDTO userCreateDTO)
         {
-            var userExists = await _userRepository.GetByEmail(userDTO.Email);
+            var userExists = await _userRepository.GetByEmail(userCreateDTO.Email);
 
             if (userExists != null)
                 throw new Exception("Já existe um usuário cadastrado com o email informado.");
 
-            userDTO.Password = BCrypt.Net.BCrypt.HashPassword(userDTO.Password);
+            userCreateDTO.Password = BCrypt.Net.BCrypt.HashPassword(userCreateDTO.Password);
 
-            var user = new User(userDTO.Email, userDTO.Password);
+            var user = new User(userCreateDTO.Email, userCreateDTO.Password);
 
             await _userRepository.Create(user);
 
-            return userDTO;
+            return userCreateDTO;
         }
 
         public Task<UserDTO> Get(long id)
@@ -57,14 +57,14 @@ namespace Services.Services
             throw new NotImplementedException();
         }
 
-        public async Task<string> Login(UserDTO userDTO)
+        public async Task<string> Login(UserLoginDTO userLoginDTO)
         {
-            var userExists = await _userRepository.GetByEmailUserWithRoles(userDTO.Email);
+            var userExists = await _userRepository.GetByEmailUserWithRoles(userLoginDTO.Email);
 
             if (userExists is null)
                 throw new DomainExceptions("Usuario ou senha incorreto, por favor verifique email e senha");
 
-            var correctPass = BCrypt.Net.BCrypt.Verify(userDTO.Password, userExists.PasswordHash.Pass);
+            var correctPass = BCrypt.Net.BCrypt.Verify(userLoginDTO.Password, userExists.PasswordHash.Pass);
 
             if (!correctPass)
             {

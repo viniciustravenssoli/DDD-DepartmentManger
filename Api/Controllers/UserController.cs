@@ -25,7 +25,7 @@ namespace Api.Controllers
 
         [HttpPost]
         [Route("/api/v1/user/create")]
-        public async Task<IActionResult> Create([FromBody] UserDTO userDTO)
+        public async Task<IActionResult> Create([FromBody] UserCreateDTO userDTO)
         {
             try
             {
@@ -50,7 +50,7 @@ namespace Api.Controllers
 
         [HttpPost]
         [Route("/api/v1/user/login")]
-        public async Task<IActionResult> Login([FromBody] UserDTO userDTO)
+        public async Task<IActionResult> Login([FromBody] UserLoginDTO userDTO)
         {
             try
             {

@@ -44,6 +44,13 @@ namespace Services.Services
             return _mapper.Map<PayrollDTO>(payrollCreated);
         }
 
+        public async Task<List<PayrollDTO>> GetAllEmployeePayroll(int id)
+        {
+            var employeePayrolls = await _payrollRepository.GetAllPayrollsFromUser(id);
+
+            return _mapper.Map<List<PayrollDTO>>(employeePayrolls);
+        }
+
         public Task<PayrollDTO> Update(PayrollDTO payrollDTO)
         {
             throw new NotImplementedException();

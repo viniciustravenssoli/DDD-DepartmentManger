@@ -9,8 +9,8 @@ namespace Services.Interfaces
 {
     public interface IUserService
     {
-        Task<UserDTO> Create(UserDTO userDTO);
-        Task<string> Login(UserDTO userDTO);
+        Task<UserCreateDTO> Create(UserCreateDTO userCreateDTO);
+        Task<string> Login(UserLoginDTO userLoginDTO);
         Task<UserDTO> Update(UserDTO userDTO);
         Task<UserDTO> GetDepartmentById(long userId);
         Task Remove(long id);

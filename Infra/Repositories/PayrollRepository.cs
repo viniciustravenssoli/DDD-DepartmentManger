@@ -17,5 +17,11 @@ namespace Infra.Repositories
             _context = context;
         }
 
+        public async Task<List<Payroll>> GetAllPayrollsFromUser(int id)
+        {
+            var payrolls = await _context.Payrolls.Where(x => x.EmployeeId == id).ToListAsync();
+
+            return payrolls;
+        }
     }
 }
